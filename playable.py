@@ -3,20 +3,47 @@ import sys
 import math
 from math import atan2, degrees, pi
 import numpy
+import random
+import time
+
+
+player_pts = 0
+opponent_pts = 0
 
 def ball_animation():
-    global ball_speed_x, ball_speed_y
+    global ball_speed_x, ball_speed_y, opponent_pts, player_pts
     ball.x += ball_speed_x
     ball.y += ball_speed_y
 
     if ball.top <= 0 or ball.bottom >=screen_height:
         ball_speed_y *= -1
-    if ball.left <= 0 or ball.right >= screen_width:
-        ball_speed_x *= -1
+
+    if ball.left <= 0:
+        opponent_pts += 1
+        ball_restart()
+ 
+        
+
+
+    if ball.right >= screen_width:
+        player_pts +=1
+        ball_restart()
+    
 
 
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
+
+
+def ball_restart():
+    global ball_speed_x, ball_speed_y
+
+    ball.center = (screen_width / 2, screen_height / 2)   
+
+    ball_speed_y = 7
+    ball_speed_x = -7
+
+
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -39,16 +66,22 @@ light_grey = (200,200,200)
 red = (255,0,0)
 
 ball_speed_y = 7
-ball_speed_x = 7
+ball_speed_x = -7
 player_speed = 0
 opponent_speed = 0
 dot1x = 0
 dot1y = 0
-player_pts = -1
-opponent_pts = 0
 
+tim = 0
 dot2x = 0
 dot2y = 0
+
+
+
+
+
+
+
 
 #the loop
 while True:
@@ -71,6 +104,7 @@ while True:
                 player_speed +=7
 
     ball_animation()
+    
     player.y += player_speed
     if player.top <= 0:
         player.top = 0
@@ -91,23 +125,13 @@ while True:
         opponent.bottom = screen_height
 
 
-    if ball.left <= 0:
-        opponent_pts += 1
 
-
-    if ball.right >= screen_width:
-        player_pts +=1
 
 
     if ball.left <= 30:
         dot1x = ball.centerx
         dot1y = ball.centery
     
-
-
-    green = (0, 255, 0)
-    blue = (0, 0, 128)
-
     strplayer = str(player_pts)
     stropponent = str(opponent_pts)
 
@@ -119,6 +143,10 @@ while True:
     opponentt = font.render(stropponent, True, light_grey, bg_color)
     opponentetc = opponentt.get_rect()
     opponentetc.center = ((1280 // 2) + 40, 40)
+
+
+
+
 
     if player_pts >= 0:
         screen.blit(opponentt, opponentetc)
@@ -151,11 +179,13 @@ while True:
         kt = dot3ym/dot3xm
         nt = dot2y - kt * dot2x
         if dot2y <= dot1y:
-            dot4x = 0-nt/kt
-            dot4y = 0
+            if kt != 0:
+                dot4x = 0-nt/kt
+                dot4y = 0
         if dot2y >= dot1y:
-            dot4x = 960-nt/kt
-            dot4y = 960
+            if kt != 0:
+                dot4x = 960-nt/kt
+                dot4y = 960
 
 
     dot5y = dot4y
@@ -284,5 +314,9 @@ while True:
     #pygame.draw.aaline(screen, red, (dot1x,dot1y), (dot2x,dot2y))
     #pygame.draw.aaline(screen, red, (dot2x,dot2y), (dot3x,dot3y))
 
+
+
+
+   
     pygame.display.flip()
     clock.tick(60)
