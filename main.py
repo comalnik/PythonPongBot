@@ -243,8 +243,6 @@ while True:
             #opponent_speed = 7        
             
     
-
-    print(dot8x)
     
 
     dot8 = pygame.Rect(dot8x,dot8y,10,10)
