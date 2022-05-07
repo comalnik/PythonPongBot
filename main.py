@@ -1,11 +1,8 @@
 import pygame
 import sys
 import math
-import time
 from math import atan2, degrees, pi
 import numpy
-
-
 
 
 def ball_animation():
@@ -20,10 +17,6 @@ def ball_animation():
 
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
-
-
-
-
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -96,10 +89,6 @@ while True:
     if opponent.bottom >=screen_height:
         opponent.bottom = screen_height
 
-
-
-
-
     if ball.left <= 20:
         dot1x = ball.centerx
         dot1y = ball.centery
@@ -127,6 +116,7 @@ while True:
     dot5y = 0
     dot5x = 0
 
+    
    
     if dot3xm != 0:
         kt = dot3ym/dot3xm
@@ -145,11 +135,8 @@ while True:
     #dot5 = pygame.Rect(dot5x,dot5y,10,10)
     #pygame.draw.ellipse(screen, red, dot5)
 
-
     dot3x = dot2x + 2000
     dot3y = kt * dot3x + nt
-
-
 
     dot6x = dot5x
     dot6y =kt * dot6x + nt
@@ -233,28 +220,12 @@ while True:
         if opponent.centery == dot12y:
             opponent_speed = 0  
     
-    
-    
-    
-    #if dot8x >= 1276:
-        #if opponent.y <= dot12y:
-            #opponent_speed = -7
-        #if opponent.y >= dot12y:
-            #opponent_speed = 7        
-            
-    
-    
-
+           
     dot8 = pygame.Rect(dot8x,dot8y,10,10)
     pygame.draw.ellipse(screen, red, dot8)
 
     dot14 = pygame.Rect(dot14x,dot14y,10,10)
     pygame.draw.ellipse(screen, red, dot14)
-
-
-
-
-
 
 
     dot12xm = dot8x-dot11x
@@ -265,29 +236,23 @@ while True:
     dot12x = 1275
     dot12y = kt12*1279+nt12
 
-
     dot12 = pygame.Rect(dot12x,dot12y,10,10)
     pygame.draw.ellipse(screen, red, dot12)
 
+    sres = str(res)
+    font = pygame.font.Font('freesansbold.ttf', 15)
+    verlog1 = font.render(sres, True, light_grey, bg_color)
+    verlog2 = verlog1.get_rect()
+    verlog2.center = (1200, 7)
+    screen.blit(verlog1, verlog2)
 
-#screen_width = 1280
 
+    #screen_width = 1280
     pygame.draw.aaline(screen, red, (dot11x,dot11y), (dot12x,dot12y))
-
     pygame.draw.aaline(screen, red, (dot8x,dot8y), (dot11x,dot11y))
-
     pygame.draw.aaline(screen, red, (dot7x,dot7y), (dot8x,dot8y))
-
-
     pygame.draw.aaline(screen, red, (dot4x,dot4y), (dot7x,dot7y))
-
     pygame.draw.aaline(screen, red, (dot1x,dot1y), (dot2x,dot2y))
-
     pygame.draw.aaline(screen, red, (dot2x,dot2y), (dot3x,dot3y))
-
-
-
-
-
     pygame.display.flip()
     clock.tick(60)

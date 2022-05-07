@@ -1,12 +1,8 @@
 import pygame
 import sys
 import math
-import time
 from math import atan2, degrees, pi
 import numpy
-
-
-
 
 def ball_animation():
     global ball_speed_x, ball_speed_y
@@ -21,10 +17,6 @@ def ball_animation():
 
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
-
-
-
-
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -57,13 +49,6 @@ opponent_pts = 0
 
 dot2x = 0
 dot2y = 0
-
-
-
-
-
-
-
 
 #the loop
 while True:
@@ -135,17 +120,10 @@ while True:
     opponentetc = opponentt.get_rect()
     opponentetc.center = ((1280 // 2) + 40, 40)
 
-
-
-
-
     if player_pts >= 0:
         screen.blit(opponentt, opponentetc)
         screen.blit(playert, playerect)
     
-    
-
-
     #dot1 = pygame.Rect(dot1x,dot1y,10,10)
     #pygame.draw.ellipse(screen, red, dot1)
 
@@ -273,31 +251,18 @@ while True:
             opponent_speed = 7
         if opponent.centery == dot12y:
             opponent_speed = 0  
-    
-    
-    
-    
+     
     #if dot8x >= 1276:
         #if opponent.y <= dot12y:
             #opponent_speed = -7
         #if opponent.y >= dot12y:
             #opponent_speed = 7        
-            
-    
-
-    
-    
 
     #dot8 = pygame.Rect(dot8x,dot8y,10,10)
     #pygame.draw.ellipse(screen, red, dot8)
 
     #dot14 = pygame.Rect(dot14x,dot14y,10,10)
     #pygame.draw.ellipse(screen, red, dot14)
-
-
-
-
-
 
 
     dot12xm = dot8x-dot11x
@@ -311,26 +276,13 @@ while True:
 
     #dot12 = pygame.Rect(dot12x,dot12y,10,10)
     #pygame.draw.ellipse(screen, red, dot12)
-
-
 #screen_width = 1280
-
     #pygame.draw.aaline(screen, red, (dot11x,dot11y), (dot12x,dot12y))
-
     #pygame.draw.aaline(screen, red, (dot8x,dot8y), (dot11x,dot11y))
-
     #pygame.draw.aaline(screen, red, (dot7x,dot7y), (dot8x,dot8y))
-
-
     #pygame.draw.aaline(screen, red, (dot4x,dot4y), (dot7x,dot7y))
-
     #pygame.draw.aaline(screen, red, (dot1x,dot1y), (dot2x,dot2y))
-
     #pygame.draw.aaline(screen, red, (dot2x,dot2y), (dot3x,dot3y))
-
-
-
-
 
     pygame.display.flip()
     clock.tick(60)
