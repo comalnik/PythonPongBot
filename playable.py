@@ -11,7 +11,7 @@ player_pts = 0
 opponent_pts = 0
 
 def ball_animation():
-    global ball_speed_x, ball_speed_y, opponent_pts, player_pts
+    global ball_speed_x, ball_speed_y, opponent_pts, player_pts, score_time
     ball.x += ball_speed_x
     ball.y += ball_speed_y
 
@@ -20,7 +20,8 @@ def ball_animation():
 
     if ball.left <= 0:
         opponent_pts += 1
-        ball_restart()
+        #ball_restart()
+        score_time = pygame.time.get_ticks()
  
         
 
@@ -28,20 +29,44 @@ def ball_animation():
     if ball.right >= screen_width:
         player_pts +=1
         ball_restart()
-    
+        score_time = pygame.time.get_ticks()
 
 
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
 
 
+
+
+
+
 def ball_restart():
-    global ball_speed_x, ball_speed_y
+    global ball_speed_x, ball_speed_y, score_time, basic_font
+    current_time = pygame.time.get_ticks()
 
-    ball.center = (screen_width / 2, screen_height / 2)   
+    ball.center = (screen_width / 2, screen_height / 2) 
 
-    ball_speed_y = 7
-    ball_speed_x = -7
+    if current_time - score_time < 700:
+       number_three = font.render("3",False, light_grey)
+       screen.blit(number_three,(screen_width/2-20,screen_height/2+20))
+
+    if 700 < current_time - score_time < 1400:
+       number_2 = font.render("2",False, light_grey)
+       screen.blit(number_2,(screen_width/2-20,screen_height/2+20))
+
+    if 1400 < current_time - score_time < 2100:
+       number_1 = font.render("1",False, light_grey)
+       screen.blit(number_1,(screen_width/2-20,screen_height/2+20))
+
+
+    if current_time - score_time < 2100:
+        ball_speed_x = 0
+        ball_speed_y = 0
+    else:
+
+        ball_speed_y = 7
+        ball_speed_x = -7
+        score_time = None
 
 
 
@@ -51,7 +76,7 @@ clock = pygame.time.Clock()
 screen_width = 1280
 screen_height = 960
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Pong Test")
+pygame.display.set_caption("Pong")
 
 #game objects
 
@@ -80,11 +105,13 @@ dot2y = 0
 
 
 
-
-
+#time
+score_time = None
 
 #the loop
 while True:
+
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -302,6 +329,13 @@ while True:
     nt12 = dot11y - kt12 * dot11x
     dot12x = 1275
     dot12y = kt12*1279+nt12
+
+
+    if score_time:
+        ball_restart()
+        
+
+
 
 
     #dot12 = pygame.Rect(dot12x,dot12y,10,10)
